@@ -33,14 +33,14 @@ def run_eda():
     
     # Plot 2: Attendance vs Result
     plt.figure(figsize=(8, 5))
-    sns.boxplot(data=df_clean, x='Final_Result', y='Attendance', palette='Set2')
+    sns.boxplot(data=df_clean, x='Final_Result', y='Attendance', hue='Final_Result', legend=False, palette='Set2')
     plt.title('Attendance Distribution by Result')
     plt.savefig('plots/attendance_vs_result.png')
     plt.close()
     
     # Plot 3: Grade Distribution
     plt.figure(figsize=(8, 5))
-    sns.countplot(data=df_clean, x='Grade', order=['A', 'B', 'C', 'F'], palette='viridis')
+    sns.countplot(data=df_clean, x='Grade', order=['A', 'B', 'C', 'F'], hue='Grade', legend=False, palette='viridis')
     plt.title('Distribution of Grades')
     plt.savefig('plots/grade_distribution.png')
     plt.close()
