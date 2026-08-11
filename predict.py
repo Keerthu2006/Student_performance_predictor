@@ -42,7 +42,7 @@ if __name__ == '__main__':
         
         at_risk = results_df[results_df['Predicted_Result'] == 'Fail']
         if not at_risk.empty:
-            print("\n⚠️ Alert: The following students are at risk of failing:")
+            print("\nAlert: The following students are at risk of failing:")
             print(at_risk)
         else:
-            print("\n✅ All students are predicted to pass.")
+            print("\nAll students are predicted to pass.")
