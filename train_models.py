@@ -8,6 +8,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 import joblib
+import json
 
 def main():
     print("Loading data...")
@@ -57,6 +58,8 @@ def main():
     best_model = None
     best_accuracy = 0
     best_model_name = ""
+    
+    all_metrics = {}
 
     print("\n--- Model Training & Evaluation ---")
     for name, model in models.items():
@@ -68,6 +71,14 @@ def main():
         rec = recall_score(y_test, y_pred, zero_division=0)
         f1 = f1_score(y_test, y_pred, zero_division=0)
         cm = confusion_matrix(y_test, y_pred)
+        
+        all_metrics[name] = {
+            "Accuracy": float(acc),
+            "Precision": float(prec),
+            "Recall": float(rec),
+            "F1_Score": float(f1),
+            "Confusion_Matrix": cm.tolist()
+        }
         
         print(f"\n{name} Results:")
         print(f"Accuracy:  {acc:.4f}")
@@ -87,6 +98,10 @@ def main():
     # Save the best model
     joblib.dump(best_model, 'best_model.pkl')
     print(f"Saved {best_model_name} to best_model.pkl")
+    
+    with open('metrics.json', 'w') as f:
+        json.dump(all_metrics, f, indent=4)
+    print("Saved metrics to metrics.json")
 
 if __name__ == '__main__':
     main()

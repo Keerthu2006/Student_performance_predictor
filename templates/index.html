@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Predictor<span>AI</span></h2>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-target="predict-section">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                    Prediction
+                </button>
+                <button class="nav-item" data-target="metrics-section">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    Model Metrics
+                </button>
+                <button class="nav-item" data-target="eda-section">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    Data Analysis
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Section 1: Predict -->
+            <section id="predict-section" class="content-section active">
+                <header class="section-header">
+                    <h1>Student Performance Prediction</h1>
+                    <p>Enter the student's metrics below to predict their final result using our trained Machine Learning model.</p>
+                </header>
+
+                <div class="card-container">
+                    <div class="card prediction-card">
+                        <form id="prediction-form">
+                            <div class="form-group">
+                                <label for="study_hours">Study Hours (0 - 10)</label>
+                                <input type="number" id="study_hours" name="Study_Hours" step="0.1" min="0" max="10" required placeholder="e.g. 5.5">
+                            </div>
+                            <div class="form-group">
+                                <label for="attendance">Attendance % (0 - 100)</label>
+                                <input type="number" id="attendance" name="Attendance" step="0.1" min="0" max="100" required placeholder="e.g. 85.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="previous_marks">Previous Marks (0 - 100)</label>
+                                <input type="number" id="previous_marks" name="Previous_Marks" step="0.1" min="0" max="100" required placeholder="e.g. 75.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="assignments">Assignments Score (0 - 100)</label>
+                                <input type="number" id="assignments" name="Assignments" step="0.1" min="0" max="100" required placeholder="e.g. 80.0">
+                            </div>
+                            <div class="form-group">
+                                <label for="internal_marks">Internal Marks (0 - 50)</label>
+                                <input type="number" id="internal_marks" name="Internal_Marks" step="0.1" min="0" max="50" required placeholder="e.g. 40.0">
+                            </div>
+                            <button type="submit" class="primary-btn" id="predict-btn">
+                                <span>Predict Result</span>
+                                <div class="spinner hidden"></div>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="card result-card">
+                        <div class="result-placeholder" id="result-placeholder">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                            <p>Fill the form to see prediction</p>
+                        </div>
+                        
+                        <div class="result-content hidden" id="result-content">
+                            <h3 id="result-title">Predicted Result</h3>
+                            <div class="result-badge" id="result-badge">PASS</div>
+                            <p id="result-message" class="result-message">This student is on track.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Metrics -->
+            <section id="metrics-section" class="content-section">
+                <header class="section-header">
+                    <h1>Model Evaluation Metrics</h1>
+                    <p>Compare the performance of our trained Machine Learning algorithms.</p>
+                </header>
+                <div class="metrics-grid" id="metrics-container">
+                    <div class="loader">Loading metrics...</div>
+                </div>
+            </section>
+
+            <!-- Section 3: EDA Plots -->
+            <section id="eda-section" class="content-section">
+                <header class="section-header">
+                    <h1>Exploratory Data Analysis</h1>
+                    <p>Visualizing the relationships between features and the target variable.</p>
+                </header>
+                <div class="plots-grid">
+                    <div class="plot-card">
+                        <h3>Study Hours vs Previous Marks</h3>
+                        <img src="/plots/study_vs_marks.png" alt="Study Hours vs Marks" loading="lazy">
+                    </div>
+                    <div class="plot-card">
+                        <h3>Attendance Distribution</h3>
+                        <img src="/plots/attendance_vs_result.png" alt="Attendance Distribution" loading="lazy">
+                    </div>
+                    <div class="plot-card">
+                        <h3>Grade Distribution</h3>
+                        <img src="/plots/grade_distribution.png" alt="Grade Distribution" loading="lazy">
+                    </div>
+                    <div class="plot-card">
+                        <h3>Feature Correlation</h3>
+                        <img src="/plots/correlation_matrix.png" alt="Correlation Matrix" loading="lazy">
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
